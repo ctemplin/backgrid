@@ -783,7 +783,14 @@ var SelectCellEditor = Backgrid.SelectCellEditor = CellEditor.extend({
   },
 
   /** @property {function(Object, ?Object=): string} template */
-  template: _.template('<option value="<%- value %>" <%= selected ? \'selected="selected"\' : "" %>><%- text %></option>', null, {variable: null}),
+  template: function () {
+      try {
+          return  _.template('<option value="<%- value %>" <%= selected ? \'selected="selected"\' : "" %>><%- text %></option>', null, {variable: null});
+      } catch (x) {
+          var func = function () { return ""; };
+          return func;
+      }
+  }(),
 
   setOptionValues: function (optionValues) {
     this.optionValues = optionValues;
